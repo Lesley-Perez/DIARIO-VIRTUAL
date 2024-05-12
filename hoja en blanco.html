@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja en Blanco</title>
+    <style>
+        /* Estilos para que el área de texto ocupe toda la ventana */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        #texto {
+            width: 100%;
+            height: 100%;
+            resize: none; /* Evitar que el usuario pueda redimensionar el área de texto */
+            border: none; /* Eliminar el borde predeterminado */
+            font-size: 16px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="texto" placeholder="Escribe aquí..."></textarea>
+</body>
+</html>
