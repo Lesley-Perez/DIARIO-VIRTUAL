@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DIARIO VIRTUAL</title>
+    <link rel="stylesheet" href="inicio.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('https://i.ibb.co/tLSf9fS/Whats-App-Image-2024-05-08-at-10-18-34-PM.jpg');
+            background-size: cover;
+        }
+
+        .top-line {
+            width: 100%;
+            height: 100px; /* Multiplicado por 10 */
+            background-color: #6f1281; /* Cambia este color al que prefieras */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Asegura que esté por encima de otros elementos */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav {
+            height: 100%; /* Alinea la navegación a la altura de la línea */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav a {
+            display: inline-block;
+            font-size: 1em;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+            padding: 0 20px; /* Ajusta el padding según prefieras */
+        }
+
+        .top-right-gif {
+    position: fixed;
+    top: 10px; /* Mover 10px hacia abajo */
+    right: 10px; /* Mover ligeramente hacia la izquierda */
+    width: 100px; /* Ajusta el tamaño del GIF según prefieras */
+    height: auto;
+    z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+    border-radius: 50%; /* Hace los bordes redondos */
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="top-line">
+        <nav>
+            <a href="#">Calendario</a>
+            <a href="#">Tareas</a>
+            <a href="#">Emociones</a>
+            <a href="#">Ocio</a>
+            <a href="#">Cuaderno</a>
+        </nav>
+        <img src="https://i.pinimg.com/originals/c5/08/31/c5083190a7944885dfee5c9567f332d5.gif
+        " alt="GIF" class="top-right-gif">
+    </div>
+</body>
+</html>
