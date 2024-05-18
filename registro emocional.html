@@ -4,27 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Emocional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin: 0 auto;
+            width: 50%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        img {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Registro Emocional</h1>
     <form action="#">
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" name="fecha"><br><br>
+        <label for="fecha"><img src="fecha_icon.png" alt="Fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha"><br>
 
-        <label for="emocion">Cómo te sientes hoy:</label><br>
-        <textarea id="emocion" name="emocion" rows="4" cols="50"></textarea><br><br>
+        <label for="emocion"><img src="emocion_icon.png" alt="Emoción">Cómo te sientes hoy:</label><br>
+        <textarea id="emocion" name="emocion" rows="4" cols="50"></textarea><br>
 
-        <label for="frase_motivadora">Frase motivadora:</label><br>
-        <textarea id="frase_motivadora" name="frase_motivadora" rows="2" cols="50"></textarea><br><br>
+        <label for="frase_motivadora"><img src="motivacion_icon.png" alt="Frase Motivadora">Frase motivadora:</label><br>
+        <textarea id="frase_motivadora" name="frase_motivadora" rows="2" cols="50"></textarea><br>
 
-        <label for="suenos">Tus sueños:</label><br>
-        <textarea id="suenos" name="suenos" rows="4" cols="50"></textarea><br><br>
+        <label for="suenos"><img src="suenos_icon.png" alt="Sueños">Tus sueños:</label><br>
+        <textarea id="suenos" name="suenos" rows="4" cols="50"></textarea><br>
 
-        <label for="tareas">¿Hiciste tus tareas?</label><br>
-        <input type="text" id="tareas" name="tareas"><br><br>
+        <label for="tareas"><img src="tareas_icon.png" alt="Tareas">¿Hiciste tus tareas?</label><br>
+        <input type="text" id="tareas" name="tareas"><br>
 
-        <label for="equilibrio_agua">Tu equilibrio de agua (en ml):</label><br>
-        <input type="number" id="equilibrio_agua" name="equilibrio_agua" min="0"><br><br>
+        <label for="equilibrio_agua"><img src="agua_icon.png" alt="Equilibrio de Agua">Tu equilibrio de agua (en ml):</label><br>
+        <input type="number" id="equilibrio_agua" name="equilibrio_agua" min="0"><br>
 
         <input type="submit" value="Enviar">
     </form>
