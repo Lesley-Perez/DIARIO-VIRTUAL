@@ -1,0 +1,252 @@
+.contenedor {
+    width: 1200%;
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+
+#enero-30 {
+    /* Cambia "rgb(236, 229, 126)" por el color que desees */
+    background-color: rgb(236, 229, 126);
+}
+
+body {
+    background-image: url('https://i.ibb.co/XzmqdgS/iniciar-sesion.jpg'); 
+    background-size: 100%,900px; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+h1 {
+    text-align: center; 
+    font-style: lighter; 
+    color: rgba(151, 64, 201, 0.993);
+}
+
+.domingo {
+    color: rgb(219, 105, 195);
+}
+
+.festivo {
+    color: rgb(176, 78, 221);
+}
+
+.cumple {
+    background-color: 0;
+}
+
+.gris {
+    color: gray;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    top: 150px;
+    left: 70px; /* Mover hacia la izquierda */
+    z-index: 1000;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+.top-bar nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.top-bar nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.top-bar nav a:first-child {
+    margin-left: 0;
+}
+
+.top-right-gif {
+    position: fixed;
+    top: 5px;
+    right: 10px;
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+    z-index: 50;
+    border-radius: 50%;
+}
+
+
+.clock {
+    font-weight: bold;
+}
+
+.event-form, .calendar-container {
+    background-color:  #f3e5f5;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-form {
+    width: 300px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #f3d0f0;
+}
+
+.calendar-container {
+    margin-top: 200px; /* Ajusta este valor según sea necesario para mover el calendario hacia abajo */
+    margin-left: 700px; /* Mueve el calendario hacia la derecha */
+}
+
+.event-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.event-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px; /* Añadimos bordes redondeados */
+    border: 1px solid #ddd; /* Añadimos un borde para mayor contraste */
+    margin-bottom: 10px; /* Agregamos margen inferior para separar los eventos */
+    background-color: #f0e3ed; /* Añadimos un fondo blanco para cada evento */
+    top: 10px;
+}
+
+.event-list li button {
+    margin-left: 10px;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.day {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.event-form button {
+    border-radius: 4px; /* Redondear el botón */
+    margin-left: 79px; /* Moverlo 5px a la derecha */
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-table {
+    width: 100%;
+    max-width: 800px; /* Ajusta este valor según sea necesario */
+    margin: 0 auto;
+    border: 1px solid #ddd; /* Opcional: para ver el borde de la tabla */
+    border-radius: 16px; /* Redondear los bordes de la tabla */
+    overflow: hidden; /* Para que el contenido no se salga de los bordes */
+}
+
+.calendar-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.top-bar {
+    width: 100%;
+    height: 100px;
+    background-color: #800080; /* Color morado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegúrate de que la barra esté siempre visible */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+
+
+
+.clock-container {
+    position: fixed;
+    top: 5px;
+    left: 10px; /* Mueve el reloj al lado izquierdo */
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Mantén las reglas para el tamaño del reloj y el gif */
+.clock {
+    font-size: 1.5em;
+    margin-right: 20px;
+}
+
+.top-right-gif {
+    position: fixed;
+    top: 5px;
+    right: 10px;
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+    z-index: 50;
+    border-radius: 50%;
+}
+
+.date {
+    position: fixed;
+    top: 30px; /* Mueve hacia arriba */
+    left: 170px; /* Mueve hacia la derecha */
+    font-size: 1.5em; /* Tamaño de fuente más pequeño de la fecha */
+    color: white; /* Color del texto de la fecha */
+    z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+}

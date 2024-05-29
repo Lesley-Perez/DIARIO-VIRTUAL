@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Financiero</title>
+    <style>
+        
+    /* Estilos CSS */
+    .top-bar {
+            width: 100%;
+            height: 100px;
+            background-color: #800080;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .top-bar nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; /* Para que los enlaces ocupen el espacio restante */
+        }
+
+        .top-bar nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .top-bar nav a:first-child {
+            margin-left: 0;
+        }
+
+        .top-right-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto; /* Mueve el contenedor al lado derecho */
+            margin-right: 40px; /* Ajusta el margen derecho */
+        }
+
+        .top-right-gif {
+            width: 100px; /* Aumenta el tamaño del gif al doble */
+            height: 100px; /* Aumenta el tamaño del gif al doble */
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        #clock {
+            margin-right: 20px; /* Ajusta el margen derecho del reloj */
+            font-size: 2em; /* Aumenta el tamaño del texto del reloj al doble */
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 150px auto 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.ibb.co/1MXBd0D/Whats-App-Image-2024-05-21-at-12-15-22-AM.jpg'); /* Cambia 'url_de_tu_imagen_de_fondo.jpg' por la URL de tu imagen */
+            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el fondo */
+            background-position: center; /* Centra la imagen */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #800080;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #800080;
+            color: #fff;
+        }
+
+        /* Nuevos estilos para las tablas */
+        .tables-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #transactionTable,
+        #strongExpensesTable {
+            flex: 1;
+        }
+
+        .date {
+            position: fixed;
+            top: 30px; /* Mueve hacia arriba */
+            left: 100px; /* Mueve hacia la derecha */
+            font-size: 1em; /* Tamaño de fuente más grande de la fecha */
+            color: white; /* Color del texto de la fecha */
+            z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <nav>
+            <a href="INICIO.HTML">inicio</a>
+            <a href="CALENDARIO.html">Calendario</a>
+            <a href="TAREAS.html">Tareas</a>
+            <a href="FINANZAS.html">Finanzas</a>
+            <a href="PROGRESO.html">Progreso</a>
+            
+        </nav>
+        <div class="top-right-container">
+            <div id="clock" class="clock"></div>
+            <img src="https://i.pinimg.com/originals/c5/08/31/c5083190a7944885dfee5c9567f332d5.gif" alt="GIF" class="top-right-gif">
+        </div>
+    </div>
+
+    <div id="date" class="date"></div>
+    <div class="container">
+        <h1>Registro Financiero</h1>
+        <form id="transactionForm">
+            <label for="transactionType">Tipo de Transacción:</label>
+            <select id="transactionType">
+                <option value="ingreso">Ingreso</option>
+                <option value="gasto">Gasto</option>
+            </select>
+            <label for="amount">Cantidad:</label>
+            <input type="text" id="amount" name="amount" placeholder="Ingrese la cantidad">
+            <label for="category">Categoría:</label>
+            <input type="text" id="category" name="category" placeholder="Ingrese la categoría">
+            <input type="submit" value="Registrar Transacción">
+        </form>
+        <h2>Historial de Transacciones</h2>
+        <table id="transactionTable">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Categoría</th>
+                </tr>
+            </thead>
+            <tbody id="transactionBody">
+                <!-- Aquí se mostrarán las transacciones -->
+            </tbody>
+        </table>
+        <h2>Presupuesto</h2>
+        <div id="budget">
+            <!-- Aquí se mostrará el presupuesto -->
+        </div>
+        <h2>Informes Financieros</h2>
+        <button onclick="generateReport()">Generar Informe</button>
+        <div id="report">
+            <!-- Aquí se mostrará el informe generado -->
+        </div>
+    </div>
+
+    <h2>Gastos Fuertes</h2>
+<table id="strongExpensesTable">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Cantidad</th>
+            <th>Categoría</th>
+        </tr>
+    </thead>
+    <tbody id="strongExpensesBody">
+        <!-- Aquí se mostrarán los gastos fuertes e innecesarios -->
+    </tbody>
+</table>
+
+<script>
+    // Función para mostrar el reloj
+    function updateClock() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+        document.getElementById('clock').textContent = timeString;
+    }
+    
+    setInterval(updateClock, 1000); // Actualiza el reloj cada segundo
+
+    // AJAX para enviar los datos del formulario al archivo PHP y recibir los resultados
+    const transactionForm = document.getElementById('transactionForm');
+    const transactionTable = document.getElementById('transactionTable');
+    const transactionBody = document.getElementById('transactionBody');
+    const budgetContainer = document.getElementById('budget');
+    const reportContainer = document.getElementById('report');
+
+    transactionForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const transactionType = document.getElementById('transactionType').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+        const category = document.getElementById('category').value;
+
+        // Verificar si el gasto es fuerte e innecesario
+        const isStrongExpense = (amount >= 4000 && amount <= 8000) && 
+                                !['gastos basicos', 'electrodomesticos', 'articulos de primera necesidad'].includes(category.toLowerCase());
+
+        if (isStrongExpense) {
+            // Agregar a la tabla de gastos fuertes e innecesarios
+            const strongExpensesBody = document.getElementById('strongExpensesBody');
+            const newRow = strongExpensesBody.insertRow();
+            newRow.innerHTML = `
+                <td>${new Date().toLocaleDateString()}</td>
+                <td>$${amount}</td>
+                <td>${category}</td>
+            `;
+        } else {
+            // Si no es un gasto fuerte e innecesario, procesar como una transacción normal
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'calculadora.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        transactions = response.transactions;
+                        budget = response.budget;
+                        updateTransactionsTable();
+                        updateBudget();
+                        transactionForm.reset();
+                    } else {
+                        console.error('Error en la solicitud AJAX');
+                    }
+                }
+            };
+            xhr.send(`transactionType=${transactionType}&amount=${amount}&category=${category}`);
+        }
+    });
+
+    // Función para actualizar la tabla de transacciones
+    function updateTransactionsTable() {
+        transactionBody.innerHTML = '';
+        transactions.forEach(transaction => {
+            const newRow = transactionBody.insertRow();
+            newRow.innerHTML = `
+                <td>${transaction.date}</td>
+                <td>${transaction.type}</td>
+                <td>${transaction.amount}</td>
+                <td>${transaction.category}</td>
+            `;
+        });
+    }
+
+    // Función para actualizar el presupuesto
+    function updateBudget() {
+        budgetContainer.textContent = `Presupuesto actual: $${budget}`;
+    }
+
+    // Función para generar el informe financiero
+    function generateReport() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'calculadora.php?generateReport=true', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    reportContainer.innerHTML = `
+                        <p>Total Ingresos: $${response.totalIngresos}</p>
+                        <p>Total Gastos: $${response.totalGastos}</p>
+                        <p>Balance: $${response.balance}</p>
+                    `;
+                } else {
+                    console.error('Error en la solicitud AJAX');
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function updateDate() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = now.toLocaleDateString('es-ES', options);
+        document.getElementById('date').textContent = formattedDate;
+    }
+
+    window.onload = () => {
+        updateDate(); // Initial call to display the date immediately
+    };
+</script>
+
+</body>
+</html>

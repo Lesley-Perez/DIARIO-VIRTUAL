@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesion</title>
+    <link rel="stylesheet" href="inicio de sesion.css">
+</head>
+<body>
+    <div class="formulario">
+        <h1>inicio de sesion</h1>
+        <form id="loginForm" onsubmit="return handleFormSubmit(event)">
+            <div class="input-field">
+                <input type="text" required>
+                <label>Nomre de usuario</label>
+            </div>
+            <div class="input-field">
+                <input type="password" required>
+                <label>Contraseña</label>
+            </div>
+            <div class="recordar">¿Olvidaste tu Contraseña?</div>
+            <input type="submit" value="iniciar">
+            <div class="registrarse">
+                Quiero <a href="#">registrarme</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Evita el envío del formulario de manera predeterminada
+            // Aquí puedes agregar lógica para validar los datos del formulario si es necesario
+            window.location.href = 'INICIO.html'; // Redirige a la siguiente página
+        }
+    </script>
+</body>
+</html>

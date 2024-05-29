@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DIARIO VIRTUAL</title>
+    <link rel="stylesheet" href="inicio.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('https://i.ibb.co/tLSf9fS/Whats-App-Image-2024-05-08-at-10-18-34-PM.jpg');
+            background-size: cover;
+        }
+
+        .top-line {
+            width: 100%;
+            height: 100px; /* Multiplicado por 10 */
+            background-color: #6f1281; /* Cambia este color al que prefieras */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Asegura que esté por encima de otros elementos */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav {
+            height: 100%; /* Alinea la navegación a la altura de la línea */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav a {
+            display: inline-block;
+            font-size: 1em;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+            padding: 0 20px; /* Ajusta el padding según prefieras */
+        }
+
+        .top-right-gif {
+            position: fixed;
+            top: 5px; /* Mover 10px hacia abajo */
+            right: 10px; /* Mover ligeramente hacia la izquierda */
+            width: 100px; /* Ajusta el tamaño del GIF según prefieras */
+            height: auto;
+            z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+            border-radius: 50%; /* Hace los bordes redondos */
+        }
+
+        .clock {
+            position: fixed;
+            top: 30px; /* Mueve hacia arriba */
+            right: 140px; /* Mueve más hacia la izquierda */
+            font-size: 2em; /* Tamaño de fuente más grande del reloj */
+            color: white; /* Color del texto del reloj */
+            z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+        }
+
+        .date {
+            position: fixed;
+            top: 30px; /* Mueve hacia arriba */
+            left: 140px; /* Mueve hacia la derecha */
+            font-size: 1em; /* Tamaño de fuente más grande de la fecha */
+            color: white; /* Color del texto de la fecha */
+            z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            position: fixed;
+            top: 150px;
+            left: 70px; /* Mover hacia la izquierda */
+            z-index: 1000;
+        }
+
+        .note-container {
+            width: 300px;
+            height: 400px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px; /* Espacio entre las cajas */
+        }
+
+        .note-container textarea {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            resize: none;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .note-container button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #6f1281;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .comments-title {
+            position: absolute;
+            top: -25px; /* Ajusta según tu preferencia */
+            left: 0;
+            width: 100%;
+            font-size: 1.2em;
+            color: #6f1281;
+            text-align: center;
+        }
+
+        .comments-container {
+            width: 600px; /* Ancho más largo */
+            height: 250px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            position: relative; /* Para posicionar el título dentro de la caja */
+        }
+
+        .comments-container p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .comment-box {
+            border: 1px solid rgba(111, 18, 129, 0.3); /* Color del borde del rectángulo */
+            border-radius: 15px; /* Bordes más redondeados */
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(111, 18, 129, 0.2); /* Sombra difuminada */
+        }
+
+        .widget-container {
+            position: fixed;
+            top: 420px; /* Ajustar según la altura de la caja de notas */
+            left: 390px; /* Alineado con la caja de notas */
+            width: 300px; /* Ajusta el ancho */
+            height: 200px; /* Ajusta la altura */
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Para ocultar las imágenes al moverse */
+            z-index: 1000;
+        }
+
+        .widget-container img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+
+        .widget-container img.active {
+            display: block;
+        }
+
+        .tasks-events-container {
+    position: fixed;
+    top: 150px;
+    right: 50px; /* Ajustar el valor negativo para mover hacia la izquierda */
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+
+.tasks-events-title {
+    font-size: 1.2em;
+    color: #6f1281;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tasks-events-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.tasks-events-content p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    background-color: rgba(111, 18, 129, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+    </style>
+</head>
+<body>
+
+
+    
+
+    <div class="tasks-events-container">
+        <div class="tasks-events-title">Tareas y Eventos</div>
+        <div id="tasks-events-content" class="tasks-events-content"></div>
+    </div>
+    
+
+    <div class="top-line">
+        <nav>
+            <a href="CALENDARIO.html">Calendario</a>
+            <a href="TAREAS.html">Tareas</a>
+            <a href="FINANZAS.html">Finanzas</a>
+            <a href="PROGRESO.html">Progreso</a>
+        </nav>
+        <img src="https://i.pinimg.com/originals/c5/08/31/c5083190a7944885dfee5c9567f332d5.gif" alt="GIF" class="top-right-gif">
+        <div id="clock" class="clock"></div>
+        <div id="date" class="date"></div>
+    </div>
+
+    <div class="container">
+        <div class="note-container">
+            <textarea id="note" placeholder="Escribe tus notas aquí..."></textarea>
+            <button onclick="saveNote()">Guardar Nota</button>
+        </div>
+
+        <div class="comments-container">
+            <div class="comments-title">Comentarios y Recomendaciones</div>
+            <div class="comment-box">
+                <p>¿Cómo te sientes hoy? ¡Cuéntanos registrando tu Progreso!</p>
+            </div>
+            <div class="comment-box">
+                <p>Administra tus finanzas y lleva un control de tu bolsillo</p>
+            </div>
+            <div class="comment-box">
+                <p>Lleva un control sobre tu propia mente</p>
+            </div>
+            <div class="comment-box">
+                <p>Registra todos tus momentos importantes del año aquí</p>
+            </div>
+            <div class="comment-box">
+                <p>Guarda y organiza tus tareas</p>
+            </div>
+            <div class="comment-box">
+                <p>Los gastos fuertes y sobre todo no tan necesarios hay que controlarlos, revisa tu apartado de finanzas y administra tus compras</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget-container">
+        <img src="https://i.ibb.co/0YVjgmV/Captura-de-pantalla-27-5-2024-202543-127-0-0-1.jpg" alt="Image 1" class="active">
+        <img src="https://i.ibb.co/2sY3Ftj/Captura-de-pantalla-27-5-2024-202630-127-0-0-1.jpg" alt="Image 2" class="active">
+        <img src="https://i.ibb.co/gRbFrZ8/Captura-de-pantalla-27-5-2024-202656-127-0-0-1.jpg" alt="Image 3" class="active">
+    </div>
+
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const formattedTime = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = formattedTime;
+        }
+
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString('es-ES', options);
+            document.getElementById('date').textContent = formattedDate;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call to display the clock immediately
+
+        function saveNote() {
+            const note = document.getElementById('note').value;
+            localStorage.setItem('userNote', note);
+        }
+
+        function loadNote() {
+            const savedNote = localStorage.getItem('userNote');
+            if (savedNote) {
+                document.getElementById('note').value = savedNote;
+            }
+        }
+
+        
+
+        // Function to change images in the widget
+        function rotateImages() {
+            const images = document.querySelectorAll('.widget-container img');
+            let currentIndex = 0;
+
+            setInterval(() => {
+                images[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.add('active');
+            }, 3000); // Cambiar la imagen cada 3 segundos
+        }
+
+        function loadTasksEvents() {
+            const tasksEventsContent = document.getElementById('tasks-events-content');
+            const savedTasks = JSON.parse(localStorage.getItem('savedTasks')) || [];
+
+            savedTasks.forEach(task => {
+                const taskElement = document.createElement('p');
+                taskElement.textContent = `Tarea: ${task.name} - ${task.startDate} to ${task.endDate}`;
+                tasksEventsContent.appendChild(taskElement);
+            });
+        }
+
+        window.onload = () => {
+            loadNote();
+            updateDate(); // Llama a esta función para mostrar la fecha inmediatamente
+            rotateImages();
+            loadTasksEvents(); // Carga las tareas guardadas en la tabla de eventos y tareas al cargar la página
+        };
+    </script>
+</body>
+</html>
