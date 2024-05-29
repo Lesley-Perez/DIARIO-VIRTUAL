@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Emocional</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function checkEmotion() {
+                // Obtener el valor de la emoción y el nivel de la emoción
+                var emotion = this.options[this.selectedIndex].value;
+                var level = parseInt(this.nextElementSibling.value);
+                var formSection = this.parentElement;
+
+                // Verificar si la emoción es "triste", "enojado" o "ansioso" y el nivel es mayor que 5
+                if ((emotion === "triste" || emotion === "enojado" || emotion === "ansioso") && level > 5) {
+                    // Cambiar el fondo del área a rosa
+                    formSection.style.backgroundColor = "#ffc0cb";
+                    // Mostrar el comentario sugerido
+                    formSection.querySelector("textarea").value = "Es una emoción complicada y a un alto nivel podría poner peor tu día. La próxima vez trata de respirar y concentrarte en lo que detona esta emoción así sabrás cómo manejarla.";
+                } else {
+                    // Si no se cumplen las condiciones, resetear el fondo y el comentario
+                    formSection.style.backgroundColor = "";
+                    formSection.querySelector("textarea").value = "";
+                }
+
+                // Si el nivel de emoción se reduce a la mitad o menos, y la emoción no es "triste", "enojado" o "ansioso", resetear el fondo y el comentario
+                if (level <= 5 && !(emotion === "triste" || emotion === "enojado" || emotion === "ansioso")) {
+                    formSection.style.backgroundColor = "";
+                    formSection.querySelector("textarea").value = "";
+                }
+            }
+
+            // Obtener todos los selectores de emoción y asignarles el evento de cambio
+            var emotionSelectors = document.querySelectorAll("select[id$='_emotion']");
+            emotionSelectors.forEach(function(select) {
+                select.addEventListener("change", checkEmotion);
+            });
+
+            // Obtener todos los sliders de nivel de emoción y asignarles el evento de cambio
+            var emotionLevelSliders = document.querySelectorAll("input[type='range']");
+            emotionLevelSliders.forEach(function(slider) {
+                slider.addEventListener("input", checkEmotion);
+            });
+
+            // Función para actualizar el reloj
+            function updateClock() {
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var seconds = now.getSeconds();
+
+                // Formatear horas, minutos y segundos
+                hours = (hours < 10) ? "0" + hours : hours;
+                minutes = (minutes < 10) ? "0" + minutes : minutes;
+                seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+                // Obtener el elemento del reloj y actualizar su contenido
+                var clockElement = document.getElementById("clock");
+                clockElement.textContent = hours + ":" + minutes + ":" + seconds;
+
+                // Actualizar cada segundo
+                setTimeout(updateClock, 1000);
+            }
+
+            // Llamar a la función para iniciar el reloj
+            updateClock();
+        });
+        // Función para guardar los datos en el almacenamiento local del navegador
+    function guardarDatos() {
+        // Obtener todos los datos del formulario
+        var formData = {
+            name: document.getElementById("name").value,
+            week: document.getElementById("week").value,
+            monday_emotion: document.getElementById("monday_emotion").value,
+            monday_level: document.getElementById("monday_level").value,
+            monday_comments: document.getElementById("monday_comments").value,
+            // Aquí agregar los demás campos del formulario
+        };
+
+        // Convertir el objeto a formato JSON
+        var formDataJSON = JSON.stringify(formData);
+
+        // Guardar los datos en el almacenamiento local
+        localStorage.setItem("registroEmocional", formDataJSON);
+
+        // Mostrar un mensaje de éxito
+        alert("Datos guardados exitosamente");
+    }
+
+    // Función para cargar los datos guardados la semana siguiente
+    window.onload = function() {
+        var datosGuardados = localStorage.getItem("registroEmocional");
+
+        if (datosGuardados !== null) {
+            // Convertir los datos JSON de nuevo a objeto JavaScript
+            var formData = JSON.parse(datosGuardados);
+
+            // Llenar los campos del formulario con los datos guardados
+            document.getElementById("name").value = formData.name;
+            document.getElementById("week").value = formData.week;
+            document.getElementById("monday_emotion").value = formData.monday_emotion;
+            document.getElementById("monday_level").value = formData.monday_level;
+            document.getElementById("monday_comments").value = formData.monday_comments;
+            // Aquí llenar los demás campos del formulario
+        }
+    };
+    // Función para ver los formularios anteriores
+    function verFormulariosAnteriores() {
+        // Redirigir al usuario a una página donde puedan ver los formularios anteriores
+        window.location.href = "formularios_anteriores.html";
+    }
+    // Función para guardar el formulario actual
+    function guardarDatos() {
+        // Obtener todos los datos del formulario
+        var formData = {
+            name: document.getElementById("name").value,
+            week: document.getElementById("week").value,
+            // Aquí agregar los demás campos del formulario
+        };
+
+        // Recuperar los formularios previamente guardados del almacenamiento local
+        var storedForms = JSON.parse(localStorage.getItem("storedForms")) || [];
+
+        // Agregar el formulario actual al array de formularios
+        storedForms.push(formData);
+
+        // Guardar el array de formularios en el almacenamiento local
+        localStorage.setItem("storedForms", JSON.stringify(storedForms));
+
+        // Mostrar un mensaje de éxito
+        alert("Datos guardados exitosamente");
+    }
+
+    // Función para ver los formularios anteriores
+    function verFormulariosAnteriores() {
+        // Recuperar los formularios guardados del almacenamiento local
+        var storedForms = JSON.parse(localStorage.getItem("storedForms")) || [];
+
+        // Mostrar los formularios anteriores de alguna manera, por ejemplo, en una nueva página o en un modal
+        // Aquí puedes implementar cómo quieres mostrar los formularios anteriores
+        console.log(storedForms); // Por ahora, simplemente los mostramos en la consola del navegador
+    }
+
+    // Función para guardar los datos del formulario y limpiarlo después
+    function guardarYLimpiarFormulario() {
+            // Obtener todos los datos del formulario
+            var formData = {
+                name: document.getElementById("name").value,
+                week: document.getElementById("week").value,
+                // Aquí agregar los demás campos del formulario
+            };
+
+            // Recuperar los formularios previamente guardados del almacenamiento local
+            var storedForms = JSON.parse(localStorage.getItem("storedForms")) || [];
+
+            // Agregar el formulario actual al array de formularios
+            storedForms.push(formData);
+
+            // Guardar el array de formularios en el almacenamiento local
+            localStorage.setItem("storedForms", JSON.stringify(storedForms));
+
+            // Limpiar el formulario después de guardar los datos
+            limpiarFormulario();
+
+            // Mostrar un mensaje de éxito
+            alert("Datos guardados exitosamente");
+        }
+
+        // Función para limpiar el formulario después de guardar los datos
+        function limpiarFormulario() {
+            // Obtener todos los elementos de formulario y restablecer su valor
+            var formElements = document.querySelectorAll("input[type='text'], input[type='date'], input[type='number'], select, textarea");
+            formElements.forEach(function(element) {
+                element.value = "";
+            });
+        }
+
+        // Función para ver los formularios anteriores
+        function verFormulariosAnteriores() {
+            // Recuperar los formularios guardados del almacenamiento local
+            var storedForms = JSON.parse(localStorage.getItem("storedForms")) || [];
+
+            // Redirigir a la página para mostrar los formularios anteriores
+            window.location.href = "formularios_anteriores.html?data=" + encodeURIComponent(JSON.stringify(storedForms));
+        }
+        // Función para guardar los datos del formulario y limpiarlo después
+function guardarYLimpiarFormulario() {
+    // Obtener todos los datos del formulario
+    var formData = {
+        name: document.getElementById("name").value,
+        week: document.getElementById("week").value,
+        // Agregar los demás campos del formulario
+    };
+
+    // Recuperar los formularios previamente guardados del almacenamiento local
+    var storedForms = JSON.parse(localStorage.getItem("storedForms")) || [];
+
+    // Agregar el formulario actual al array de formularios
+    storedForms.push(formData);
+
+    // Guardar el array de formularios en el almacenamiento local
+    localStorage.setItem("storedForms", JSON.stringify(storedForms));
+
+    // Limpiar el formulario después de guardar los datos
+    limpiarFormulario();
+
+    // Mostrar un mensaje de éxito
+    alert("Datos guardados exitosamente");
+}
+function updateDate() {
+    var now = new Date();
+    var dateElement = document.getElementById("date");
+    dateElement.textContent = now.toLocaleDateString("es-ES", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+}
+
+// Llamar a la función para iniciar la fecha
+updateDate();
+
+function updateDate() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = now.toLocaleDateString('es-ES', options);
+        document.getElementById('date').textContent = formattedDate;
+    }
+
+    window.onload = () => {
+        updateDate(); // Initial call to display the date immediately
+    };
+
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 120px; /* Mueve el contenido hacia abajo */
+        }
+
+        h1 {  
+            color: #333;
+        }
+
+        form {
+            margin: 0 auto;
+            width: 80%; /* Ajuste del ancho para que quepa mejor en la página */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px; /* Espacio entre los elementos */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            background-color: #f8a7e3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            grid-column: span 3; /* Hace que el botón de enviar ocupe toda la fila */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #fabcf8;
+        }
+
+        img {
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            width: 100%;
+            height: 100px;
+            background-color: #800080;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .top-bar nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .top-bar nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .clock-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .clock {
+            color: white;
+            margin-right: 20px;
+            font-size: 2em;
+        }
+
+        .top-right-gif {
+            margin-right: 30px;
+            width: 90px;
+            height: 90px;
+        }
+
+        .form-section {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .form-section {
+    border: 1px solid #800080; /* Cambiar el color del borde a morado */
+    border-radius: 10px; /* Redondear los bordes */
+    padding: 15px;
+    background-color: rgba(128, 0, 128, 0.1); /* Hacer el fondo morado y difuminado */
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    background-color: #f8a7e3;
+    border: none;
+    color: white;
+    padding: 10px 0 15px; /* Esto es lo que ajustaste */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: #fabcf8;
+}
+
+
+.date {
+            position: fixed;
+            top: 30px; /* Mueve hacia arriba */
+            left: 140px; /* Mueve hacia la derecha */
+            font-size: 1.5em; /* Tamaño de fuente más grande de la fecha */
+            color: white; /* Color del texto de la fecha */
+            z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <nav>
+            <a href="INICIO.HTML">Inicio</a>
+            <a href="CALENDARIO.html">Calendario</a>
+            <a href="TAREAS.html">Tareas</a>
+            <a href="FINANZAS.html">Finanzas</a>
+            <a href="PROGRESO.html">Progreso</a>
+        </nav>
+        <div class="clock-container">
+            <div class="clock" id="clock"></div>
+            <img src="https://i.pinimg.com/originals/c5/08/31/c5083190a7944885dfee5c9567f332d5.gif" alt="GIF" class="top-right-gif">
+        </div>
+    </div>
+
+    <h1>Registro Emocional Semanal</h1>
+    <form>
+        <!-- Información Básica -->
+        <div class="form-section">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="week">Semana de:</label>
+            <input type="date" id="week" name="week">
+        </div>
+
+        <!-- Estado de Ánimo Diario -->
+        <div class="form-section">
+            <h2>Estado de Ánimo Diario</h2>
+            <label for="monday_emotion">Lunes:</label>
+            <select id="monday_emotion" name="monday_emotion">
+                <option value="feliz">Feliz</option>
+                <option value="triste">Triste</option>
+                <option value="enojado">Enojado</option>
+                <option value="ansioso">Ansioso</option>
+                <option value="relajado">Relajado</option>
+            </select>
+            <input type="range" id="monday_level" name="monday_level" min="1" max="10">
+            <textarea id="monday_comments" name="monday_comments" placeholder="Comentarios"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="tuesday_emotion">Martes:</label>
+            <select id="tuesday_emotion" name="tuesday_emotion">
+                <option value="feliz">Feliz</option>
+                <option value="triste">Triste</option>
+                <option value="enojado">Enojado</option>
+                <option value="ansioso">Ansioso</option>
+                <option value="relajado">Relajado</option>
+            </select>
+            <input type="range" id="tuesday_level" name="tuesday_level" min="1" max="10">
+            <textarea id="tuesday_comments" name="tuesday_comments" placeholder="Comentarios"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="wednesday_emotion">Miércoles:</label>
+            <select id="wednesday_emotion" name="wednesday_emotion">
+                <option value="feliz">Feliz</option>
+                <option value="triste">Triste</option>
+                <option value="enojado">Enojado</option>
+                <option value="ansioso">Ansioso</option>
+                <option value="relajado">Relajado</option>
+            </select>
+            <input type="range" id="wednesday_level" name="wednesday_level" min="1" max="10">
+            <textarea id="wednesday_comments" name="wednesday_comments" placeholder="Comentarios"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="thursday_emotion">Jueves:</label>
+            <select id="thursday_emotion" name="thursday_emotion">
+                <option value="feliz">Feliz</option>
+                <option value="triste">Triste</option>
+                <option value="enojado">Enojado</option>
+                <option value="ansioso">Ansioso</option>
+                <option value="relajado">Relajado</option>
+            </select>
+            <input type="range" id="thursday_level" name="thursday_level" min="1" max="10">
+            <textarea id="thursday_comments" name="thursday_comments" placeholder="Comentarios"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="friday_emotion">Viernes:</label>
+            <select id="friday_emotion" name="friday_emotion">
+                <option value="feliz">Feliz</option>
+                <option value="triste">Triste</option>
+                <option value="enojado">Enojado</option>
+                <option value="ansioso">Ansioso</option>
+                <option value="relajado">Relajado</option>
+            </select>
+            <input type="range" id="friday_level" name="friday_level" min="1" max="10">
+            <textarea id="friday_comments" name="friday_comments" placeholder="Comentarios"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="saturday_emotion">Sábado:</label>
+            <select id="saturday_emotion" name="saturday_emotion">
+                <option value="feliz">Feliz</option>
+                <option value="triste">Triste</option>
+                <option value="enojado">Enojado</option>
+                <option value="ansioso">Ansioso</option>
+                <option value="relajado">Relajado</option>
+            </select>
+            <input type="range" id="saturday_level" name="saturday_level" min="1" max="10">
+            <textarea id="saturday_comments" name="saturday_comments" placeholder="Comentarios"></textarea>
+        </div>
+
+                <!-- Hábitos Saludables -->
+                <div class="form-section">
+                    <h2>Hábitos Saludables</h2>
+                    <label for="exercise_type">Ejercicio Tipo:</label>
+                    <input type="text" id="exercise_type" name="exercise_type">
+                    
+                    <label for="exercise_frequency">Ejercicio Frecuencia:</label>
+                    <input type="text" id="exercise_frequency" name="exercise_frequency">
+                    
+                    <label for="sleep_hours">Sueño Horas Diarias:</label>
+                    <input type="number" id="sleep_hours" name="sleep_hours" min="0">
+                    
+                    <label for="sleep_quality">Calidad del Sueño (Escala de 1 a 10):</label>
+                    <input type="number" id="sleep_quality" name="sleep_quality" min="1" max="10">
+                    
+                    <label for="balanced_meals">Comidas Balanceadas (Sí/No):</label>
+                    <select id="balanced_meals" name="balanced_meals">
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                    
+                    <label for="personal_time">Tiempo para Uno Mismo:</label>
+                    <input type="text" id="personal_time" name="personal_time">
+                    
+                    <label for="relaxing_activities">Actividades Relajantes:</label>
+                    <input type="text" id="relaxing_activities" name="relaxing_activities">
+                    
+                    <label for="relaxing_activities_frequency">Frecuencia de Actividades Relajantes:</label>
+                    <input type="text" id="relaxing_activities_frequency" name="relaxing_activities_frequency">
+                </div>
+        
+                <!-- Tareas y Objetivos Semanales -->
+                <div class="form-section">
+                    <h2>Tareas y Objetivos Semanales</h2>
+                    <label for="weekly_goal">Objetivo de la Semana:</label>
+                    <input type="text" id="weekly_goal" name="weekly_goal">
+                    
+                    <label for="progress">Progreso (Completado/En Proceso/No Iniciado):</label>
+                    <select id="progress" name="progress">
+                        <option value="completado">Completado</option>
+                        <option value="en_proceso">En Proceso</option>
+                        <option value="no_iniciado">No Iniciado</option>
+                    </select>
+                    
+                    <label for="specific_tasks_1">Tarea Específica 1:</label>
+                    <input type="text" id="specific_tasks_1" name="specific_tasks_1">
+                    
+                    <label for="specific_tasks_2">Tarea Específica 2:</label>
+                    <input type="text" id="specific_tasks_2" name="specific_tasks_2">
+                    
+                    <label for="specific_tasks_3">Tarea Específica 3:</label>
+                    <input type="text" id="specific_tasks_3" name="specific_tasks_3">
+                </div>
+        
+                <!-- Sesiones de Terapia -->
+                <div class="form-section">
+                    <h2>Sesiones de Terapia (si aplica)</h2>
+                    <label for="therapy_session_date">Fecha de la Sesión:</label>
+                    <input type="date" id="therapy_session_date" name="therapy_session_date">
+                    
+                    <label for="therapy_topics">Temas Tratados:</label>
+                    <textarea id="therapy_topics" name="therapy_topics" placeholder="Temas Tratados"></textarea>
+                    
+                    <label for="important_notes">Notas Importantes:</label>
+                    <textarea id="important_notes" name="important_notes" placeholder="Notas Importantes"></textarea>
+                </div>
+        
+                <!-- Reflexión y Gratitud -->
+                <div class="form-section">
+                    <h2>Reflexión y Gratitud</h2>
+                    <label for="weekly_accomplishments">Logros de la Semana:</label>
+                    <textarea id="weekly_accomplishments" name="weekly_accomplishments" placeholder="Logros de la Semana"></textarea>
+                    
+                    <label for="gratitude">Cosas por las que Estoy Agradecido/a:</label>
+                    <textarea id="gratitude" name="gratitude" placeholder="Cosas por las que Estoy Agradecido/a"></textarea>
+                </div>
+               
+                <input type="button" value="Ver Formularios Anteriores" onclick="verFormulariosAnteriores()">
+                <input type="button" value="Guardar Datos" onclick="guardarYLimpiarFormulario()">
