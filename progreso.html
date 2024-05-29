@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios Anteriores</title>
+
+    <style>
+        /* Estilos para la barra de navegación */
+        .top-bar {
+            width: 100%;
+            height: 100px;
+            background-color: #800080;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .top-bar nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .top-bar nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .clock-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .clock {
+            color: white;
+            margin-right: 20px;
+            font-size: 2em;
+        }
+
+        .top-right-gif {
+            margin-right: 30px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        /* Estilos para el contenido */
+        #formularios-anteriores {
+            margin-top: 115px; /* Ajustar el margen para evitar solapamiento con la barra de navegación */
+        }
+
+        #informacion-formulario {
+            margin-top: 20px;
+        }
+
+        .form-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        h1 {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="top-bar">
+        <nav>
+            <a href="INICIO.HTML">Inicio</a>
+            <a href="CALENDARIO.html">Calendario</a>
+            <a href="TAREAS.html">Tareas</a>
+            <a href="FINANZAS.html">Finanzas</a>
+            <a href="PROGRESO.html">Registro Emocional</a>
+        </nav>
+        <div class="clock-container">
+            <div class="clock" id="clock"></div>
+            <img src="https://i.pinimg.com/originals/c5/08/31/c5083190a7944885dfee5c9567f332d5.gif" alt="GIF" class="top-right-gif">
+        </div>
+    </div>
+
+    <h1>Formularios Anteriores</h1>
+    <div id="formularios-anteriores"></div>
+    <div id="informacion-formulario"></div>
+
+    <script>
+        // Obtener los datos de los formularios anteriores de la URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var formData = urlParams.get('data');
+
+        // Convertir los datos de cadena JSON a objeto JavaScript
+        var storedForms = JSON.parse(decodeURIComponent(formData));
+
+        // Mostrar los formularios anteriores en la página
+        var formulariosAnterioresContainer = document.getElementById("formularios-anteriores");
+        storedForms.forEach(function(form, index) {
+            var formHtml = "<div class='form-container' onclick='mostrarInformacion(" + index + ")'>";
+            formHtml += "<h2>Formulario " + (index + 1) + "</h2>";
+            formHtml += "<p><strong>Nombre:</strong> " + form.name + "</p>";
+            formHtml += "<p><strong>Semana de:</strong> " + form.week + "</p>";
+            // Agregar el resto de los campos del formulario según sea necesario
+            formHtml += "</div>";
+            formulariosAnterioresContainer.innerHTML += formHtml;
+        });
+
+        // Función para mostrar toda la información del formulario seleccionado
+        function mostrarInformacion(index) {
+            var selectedForm = storedForms[index];
+            var informacionFormularioContainer = document.getElementById("informacion-formulario");
+            var informacionHtml = "<h2>Información del Formulario Seleccionado</h2>";
+            informacionHtml += "<p><strong>Nombre:</strong> " + selectedForm.name + "</p>";
+            informacionHtml += "<p><strong>Semana de:</strong> " + selectedForm.week + "</p>";
+            // Agregar el resto de los campos del formulario según sea necesario
+            informacionFormularioContainer.innerHTML = informacionHtml;
+        }
+
+        // Función para actualizar el reloj
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+
+            // Formatear horas, minutos y segundos
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+            // Mostrar el reloj
+            document.getElementById('clock').textContent = hours + ":" + minutes + ":" + seconds;
+        }
+
+        // Actualizar el reloj cada segundo
+        setInterval(updateClock, 1000);
+
+        // Ejecutar la función de actualización del reloj para mostrarlo inmediatamente
+        updateClock();
+    </script>
+</body>
+</html>
+ 
