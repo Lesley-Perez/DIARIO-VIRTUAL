@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-1BBXm8fW90+nuLcSKlbmrPcLa00T92x01BIsZ+ywOWZCvqsWgccV3gFoRBv@z+8dLJgyAHIhR35VZc2oM/gIlw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="lista de tareas.css">
+    <title>Lista de Tareas</title>
+    <style>
+        .date {
+            position: fixed;
+            top: 30px; /* Mueve hacia arriba */
+            left: 70px; /* Mueve hacia la derecha */
+            font-size: 1em; /* Tamaño de fuente más pequeño de la fecha */
+            color: white; /* Color del texto de la fecha */
+            z-index: 1100; /* Asegura que esté por encima de la línea y la navegación */
+        }
+
+        .top-bar {
+            width: 100%;
+            height: 100px;
+            background-color: #6f1281;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            font-size: 1em;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .top-right-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-right-gif {
+            margin-left: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .clock {
+            font-size: 1.5em;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <nav>
+            <a href="INICIO.HTML">Inicio</a>
+            <a href="CALENDARIO.html">Calendario</a>
+            <a href="TAREAS.html">Tareas</a>
+            <a href="FINANZAS.html">Finanzas</a>
+            <a href="PROGRESO.html">Progreso</a>
+        </nav>
+        <div class="top-right-content">
+            <div class="clock" id="clock"></div>
+            <div id="date" class="date"></div>
+            <img src="https://i.pinimg.com/originals/c5/08/31/c5083190a7944885dfee5c9567f332d5.gif" alt="GIF" class="top-right-gif">
+        </div>
+    </div>
+
+    <header>
+        <h1>LISTA DE TAREAS</h1>
+    </header>
+    <div class="container">
+        <div class="todo-container">
+            <form id="todo-form">
+                <input type="text" id="todo-name" class="todo-input" placeholder="Nombre de la tarea" required>
+                <input type="text" id="todo-description" class="todo-input" placeholder="Descripción" required>
+                <input type="date" id="start-date" class="todo-input" required>
+                <input type="date" id="end-date" class="todo-input" required>
+                <button class="todo-button" type="submit">
+                    <i class="fas fa-plus-circle fa-lg"></i>
+                </button>
+                <div class="select">
+                    <select name="todos" class="filter-todo">
+                        <option value="all">Todo</option>
+                        <option value="completed">Terminada</option>
+                        <option value="incomplete">Incompleta</option>
+                        <option value="unfinished">No realizada</option>
+                    </select>
+                </div>
+            </form>
+            <ul class="todo-list"></ul>
+        </div>
+        <div class="saved-tasks-container">
+            <header>Tareas Guardadas</header>
+            <ul class="saved-tasks-list"></ul>
+        </div>
+    </div>
+
+    <script>//esto es para mortar el relog
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+            document.getElementById('clock').textContent = timeString;
+        }
+        //esto es para mortar la fecha
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString('es-ES', options);
+            document.getElementById('date').textContent = formattedDate;
+        }
+
+        setInterval(updateClock, 1000); // Actualiza el reloj cada segundo
+        
+        window.onload = () => {
+            updateClock(); // Muestra el reloj inmediatamente
+            updateDate(); // Muestra la fecha inmediatamente
+        };
+        // Función para manejar el envío del formulario
+        document.getElementById('todo-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el comportamiento predeterminado del formulario
+
+            // Obtiene los valores del formulario
+            var todoName = document.getElementById('todo-name').value;
+            var todoDescription = document.getElementById('todo-description').value;
+            var startDate = document.getElementById('start-date').value;
+            var endDate = document.getElementById('end-date').value;
+
+            // Crea un objeto de tarea
+            var todoItem = {
+                name: todoName,
+                description: todoDescription,
+                startDate: startDate,
+                endDate: endDate
+            };
+
+            // Guarda la tarea en el almacenamiento local (puedes usar otras opciones como bases de datos)
+            var savedTasks = JSON.parse(localStorage.getItem('savedTasks')) || [];
+            savedTasks.push(todoItem);
+            localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
+
+            // Actualiza la lista de tareas guardadas
+            updateSavedTasks(savedTasks);
+
+            // Limpia el formulario después de guardar la tarea
+            document.getElementById('todo-form').reset();
+        });
+
+        // Función para actualizar la lista de tareas guardadas
+        function updateSavedTasks(tasks) {
+            var savedTasksList = document.querySelector('.saved-tasks-list');
+            savedTasksList.innerHTML = ''; // Limpia la lista antes de volver a llenarla
+
+            tasks.forEach(function(task) {
+                var taskItem = document.createElement('li');
+                taskItem.textContent = task.name + ' - ' + task.startDate + ' to ' + task.endDate;
+                savedTasksList.appendChild(taskItem);
+            });
+        }
+
+        // Función para cargar las tareas guardadas al cargar la página
+        window.onload = function() {
+            var savedTasks = JSON.parse(localStorage.getItem('savedTasks')) || [];
+            updateSavedTasks(savedTasks);
+        };
+    </script>
+</body>
+</html>
